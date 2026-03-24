@@ -11,7 +11,9 @@ import kmp.edu.leafon_kmp.presentation.login.LoginAction
 import kmp.edu.leafon_kmp.presentation.login.LoginScreen
 import kmp.edu.leafon_kmp.presentation.login.LoginViewModel
 import kmp.edu.leafon_kmp.presentation.navigation.AppRoute
+import kmp.edu.leafon_kmp.presentation.register.RegisterAction
 import kmp.edu.leafon_kmp.presentation.register.RegisterScreen
+import kmp.edu.leafon_kmp.presentation.register.RegisterViewModel
 
 @Composable
 @Preview
@@ -44,7 +46,31 @@ fun App() {
             }
 
             composable(AppRoute.Register.route) {
+                val registerViewModel = remember { RegisterViewModel() }
+
                 RegisterScreen(
+                    state = registerViewModel.state,
+                    onNameChange = {
+                        registerViewModel.onAction(RegisterAction.OnNameChange(it))
+                    },
+                    onEmailChange = {
+                        registerViewModel.onAction(RegisterAction.OnEmailChange(it))
+                    },
+                    onPhoneChange = {
+                        registerViewModel.onAction(RegisterAction.OnPhoneChange(it))
+                    },
+                    onPlantNameChange = {
+                        registerViewModel.onAction(RegisterAction.OnPlantNameChange(it))
+                    },
+                    onPasswordChange = {
+                        registerViewModel.onAction(RegisterAction.OnPasswordChange(it))
+                    },
+                    onConfirmPasswordChange = {
+                        registerViewModel.onAction(RegisterAction.OnConfirmPasswordChange(it))
+                    },
+                    onRegisterClick = {
+                        registerViewModel.onAction(RegisterAction.OnRegisterClick)
+                    },
                     onBackToLoginClick = {
                         navController.popBackStack()
                     }
