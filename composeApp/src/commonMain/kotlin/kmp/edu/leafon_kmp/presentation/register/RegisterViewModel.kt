@@ -14,7 +14,6 @@ class RegisterViewModel {
             is RegisterAction.OnNameChange -> state = state.copy(name = action.value)
             is RegisterAction.OnEmailChange -> state = state.copy(email = action.value)
             is RegisterAction.OnPhoneChange -> state = state.copy(phone = action.value)
-            is RegisterAction.OnPlantNameChange -> state = state.copy(plantName = action.value)
             is RegisterAction.OnPasswordChange -> state = state.copy(password = action.value)
             is RegisterAction.OnConfirmPasswordChange -> state = state.copy(confirmPassword = action.value)
             RegisterAction.OnRegisterClick -> register()

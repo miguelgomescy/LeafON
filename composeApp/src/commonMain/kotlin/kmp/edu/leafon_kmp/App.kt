@@ -59,9 +59,6 @@ fun App() {
                     onPhoneChange = {
                         registerViewModel.onAction(RegisterAction.OnPhoneChange(it))
                     },
-                    onPlantNameChange = {
-                        registerViewModel.onAction(RegisterAction.OnPlantNameChange(it))
-                    },
                     onPasswordChange = {
                         registerViewModel.onAction(RegisterAction.OnPasswordChange(it))
                     },

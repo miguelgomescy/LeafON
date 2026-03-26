@@ -1,72 +1,160 @@
-This is a Kotlin Multiplatform project targeting Android, Web, Desktop (JVM).
+# LeafON KMP
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-    - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-    - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-      For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-      the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-      Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-      folder is the appropriate location.
+Projeto Kotlin Multiplatform com Compose Multiplatform, organizado para compartilhar a maior parte da UI e da logica entre Android, Desktop (JVM) e Web.
 
-### Build and Run Android Application
+## Estrutura atual do projeto
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
+```text
+LeafON-KMP/
+|-- composeApp/
+|   |-- build.gradle.kts
+|   `-- src/
+|       |-- commonMain/
+|       |   |-- composeResources/
+|       |   `-- kotlin/kmp/edu/leafon_kmp/
+|       |       |-- App.kt
+|       |       |-- Platform.kt
+|       |       `-- presentation/
+|       |           |-- navigation/
+|       |           |-- home/
+|       |           |-- login/
+|       |           |-- register/
+|       |           `-- profile/
+|       |-- commonTest/
+|       |   `-- kotlin/
+|       |-- androidMain/
+|       |   |-- kotlin/kmp/edu/leafon_kmp/
+|       |   |   |-- MainActivity.kt
+|       |   |   `-- Platform.android.kt
+|       |   `-- res/
+|       |-- jvmMain/
+|       |   `-- kotlin/kmp/edu/leafon_kmp/
+|       |       |-- main.kt
+|       |       `-- Platform.jvm.kt
+|       |-- jsMain/
+|       |   `-- kotlin/kmp/edu/leafon_kmp/
+|       |       `-- Platform.js.kt
+|       |-- wasmJsMain/
+|       |   `-- kotlin/kmp/edu/leafon_kmp/
+|       |       `-- Platform.wasmJs.kt
+|       `-- webMain/
+|           |-- kotlin/kmp/edu/leafon_kmp/
+|           |   `-- main.kt
+|           `-- resources/
+|               |-- index.html
+|               `-- styles.css
+|-- gradle/
+|   |-- libs.versions.toml
+|   `-- wrapper/
+|-- build.gradle.kts
+|-- settings.gradle.kts
+|-- gradle.properties
+|-- gradlew
+`-- gradlew.bat
+```
 
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
+### Resumo das pastas principais
 
-### Build and Run Desktop (JVM) Application
+- `composeApp/`: modulo principal da aplicacao e onde estao os targets multiplataforma.
+- `composeApp/src/commonMain/`: codigo compartilhado entre Android, Desktop e Web.
+- `composeApp/src/androidMain/`: implementacoes especificas do Android.
+- `composeApp/src/jvmMain/`: entrada e codigo especifico da versao Desktop.
+- `composeApp/src/jsMain/`: adaptacoes do target JavaScript.
+- `composeApp/src/wasmJsMain/`: adaptacoes do target WebAssembly.
+- `composeApp/src/webMain/`: ponto de entrada web e recursos estaticos.
+- `gradle/`: configuracoes do Gradle Wrapper e catalogo de dependencias.
 
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
+## Requisitos
 
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
+Antes de executar o projeto, tenha no ambiente:
 
-### Build and Run Web Application
+- JDK 11 ou superior.
+- Android Studio para rodar a versao Android.
+- SDK do Android configurado localmente.
+- Um navegador moderno para a versao Web.
 
-To build and run the development version of the web app, use the run configuration from the run widget
-in your IDE's toolbar or run it directly from the terminal:
+## Como rodar o projeto
 
-- for the Wasm target (faster, modern browsers):
-    - on macOS/Linux
-      ```shell
-      ./gradlew :composeApp:wasmJsBrowserDevelopmentRun
-      ```
-    - on Windows
-      ```shell
-      .\gradlew.bat :composeApp:wasmJsBrowserDevelopmentRun
-      ```
-- for the JS target (slower, supports older browsers):
-    - on macOS/Linux
-      ```shell
-      ./gradlew :composeApp:jsBrowserDevelopmentRun
-      ```
-    - on Windows
-      ```shell
-      .\gradlew.bat :composeApp:jsBrowserDevelopmentRun
-      ```
+Os comandos abaixo usam o Gradle Wrapper do repositorio.
 
----
+### Android
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+Para gerar o build de desenvolvimento:
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack
-channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+- Windows
+
+```powershell
+.\gradlew.bat :composeApp:assembleDebug
+```
+
+- macOS/Linux
+
+```bash
+./gradlew :composeApp:assembleDebug
+```
+
+Para executar no dispositivo ou emulador, a forma mais pratica e abrir o projeto no Android Studio e rodar a configuracao do modulo Android.
+
+### Desktop (JVM)
+
+Executa a aplicacao desktop localmente:
+
+- Windows
+
+```powershell
+.\gradlew.bat :composeApp:run
+```
+
+- macOS/Linux
+
+```bash
+./gradlew :composeApp:run
+```
+
+Se precisar gerar instaladores nativos, o modulo tambem esta configurado para distribuir `Dmg`, `Msi` e `Deb`.
+
+### Web
+
+O projeto possui dois targets web:
+
+- `wasmJs`: versao WebAssembly, preferencial para navegadores modernos.
+- `js`: versao JavaScript, util para compatibilidade adicional.
+
+#### Web com Wasm
+
+- Windows
+
+```powershell
+.\gradlew.bat :composeApp:wasmJsBrowserDevelopmentRun
+```
+
+- macOS/Linux
+
+```bash
+./gradlew :composeApp:wasmJsBrowserDevelopmentRun
+```
+
+#### Web com JavaScript
+
+- Windows
+
+```powershell
+.\gradlew.bat :composeApp:jsBrowserDevelopmentRun
+```
+
+- macOS/Linux
+
+```bash
+./gradlew :composeApp:jsBrowserDevelopmentRun
+```
+
+## Observacoes
+
+- A entrada da versao Android fica em `composeApp/src/androidMain/kotlin/kmp/edu/leafon_kmp/MainActivity.kt`.
+- A entrada da versao Desktop fica em `composeApp/src/jvmMain/kotlin/kmp/edu/leafon_kmp/main.kt`.
+- A entrada da versao Web fica em `composeApp/src/webMain/kotlin/kmp/edu/leafon_kmp/main.kt`.
+- Os estilos e recursos HTML/CSS da Web ficam em `composeApp/src/webMain/resources/`.
+
+## Observacao sobre validacao
+
+Os comandos foram documentados com base na configuracao atual do Gradle do projeto. Neste ambiente eu nao consegui executar o wrapper ate o fim porque o download da distribuicao do Gradle depende de rede, que esta bloqueada no sandbox.
