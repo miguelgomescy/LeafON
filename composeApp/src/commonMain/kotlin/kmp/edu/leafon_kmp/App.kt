@@ -7,6 +7,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import kmp.edu.leafon_kmp.presentation.home.DashboardScreen
+import kmp.edu.leafon_kmp.presentation.home.HomeAction
+import kmp.edu.leafon_kmp.presentation.home.HomeViewModel
 import kmp.edu.leafon_kmp.presentation.login.LoginAction
 import kmp.edu.leafon_kmp.presentation.login.LoginScreen
 import kmp.edu.leafon_kmp.presentation.login.LoginViewModel
@@ -38,6 +41,11 @@ fun App() {
                     },
                     onLoginClick = {
                         loginViewModel.onAction(LoginAction.OnLoginClick)
+                        navController.navigate(AppRoute.Home.route) {
+                            popUpTo(AppRoute.Login.route) {
+                                inclusive = true
+                            }
+                        }
                     },
                     onCreateAccountClick = {
                         navController.navigate(AppRoute.Register.route)
@@ -67,10 +75,24 @@ fun App() {
                     },
                     onRegisterClick = {
                         registerViewModel.onAction(RegisterAction.OnRegisterClick)
+                        navController.navigate(AppRoute.Home.route) {
+                            popUpTo(AppRoute.Login.route) {
+                                inclusive = true
+                            }
+                        }
                     },
                     onBackToLoginClick = {
                         navController.popBackStack()
                     }
+                )
+            }
+
+            composable(AppRoute.Home.route) {
+                val homeViewModel = remember { HomeViewModel() }
+
+                DashboardScreen(
+                    state = homeViewModel.state,
+                    onAction = homeViewModel::onAction,
                 )
             }
         }
