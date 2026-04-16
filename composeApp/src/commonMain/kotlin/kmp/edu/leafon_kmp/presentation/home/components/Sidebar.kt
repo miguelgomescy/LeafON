@@ -26,6 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kmp.edu.leafon_kmp.presentation.home.ui.LeafOnColors
 
+import androidx.compose.foundation.Image
+import leafon_kmp.composeapp.generated.resources.Res
+import leafon_kmp.composeapp.generated.resources.logo
+import org.jetbrains.compose.resources.painterResource
+
+
+
 enum class SidebarDestination { HOME, HISTORY, PLANT_AND_POT, ALERTS, PROFILE }
 
 @Composable
@@ -81,12 +88,13 @@ fun Sidebar(
                         .background(LeafOnColors.BgSoftGreen, CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Text(
-                        text = "L",
-                        color = LeafOnColors.GreenPrimary,
-                        fontWeight = FontWeight.Bold,
+                    Image(
+                        painter = painterResource(Res.drawable.logo),
+                        contentDescription = "LeafON Logo",
+                        modifier = Modifier.height(32.dp)
                     )
                 }
+
                 Spacer(Modifier.width(8.dp))
                 Text(
                     text = "LeafON",

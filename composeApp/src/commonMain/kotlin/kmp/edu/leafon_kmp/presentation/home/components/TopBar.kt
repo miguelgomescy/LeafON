@@ -72,7 +72,7 @@ private fun ExpandedTopBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "Dashboard",
+            text = "Dashboard -- Home",
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
             color = LeafOnColors.TextPrimary,
@@ -91,7 +91,7 @@ private fun ExpandedTopBar(
         Spacer(Modifier.width(12.dp))
 
         Text(
-            text = "Last update: ${plantStatus.lastUpdate}",
+            text = "Última Atualização: ${plantStatus.lastUpdate}",
             fontSize = 13.sp,
             color = LeafOnColors.TextSecondary,
         )
